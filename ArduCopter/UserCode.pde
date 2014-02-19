@@ -6,7 +6,7 @@ const HAL_MPNG& hal_mpng = AP_HAL_BOARD_DRIVER;
 
 void userhook_init()
 {
-  hal_mpng.uartD->begin(38400);
+  //hal_mpng.uartD->begin(38400);
 }
 #endif
 
@@ -28,7 +28,7 @@ void userhook_50Hz()
 void userhook_MediumLoop()
 {
     // put your 10Hz code here
-  hal_mpng.uartD->print("$LED,");
+  /*hal_mpng.uartD->print("$LED,");
   hal_mpng.uartD->print(current_loc.alt/100,DEC);
   hal_mpng.uartD->print(",");
   hal_mpng.uartD->print(control_mode);
@@ -38,7 +38,7 @@ void userhook_MediumLoop()
   hal_mpng.uartD->print(ahrs.pitch_sensor/100,DEC);
   hal_mpng.uartD->print(",");
   hal_mpng.uartD->print(motors.armed());
-  hal_mpng.uartD->println("#");
+  hal_mpng.uartD->println("#");*/
 }
 #endif
 

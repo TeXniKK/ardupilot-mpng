@@ -5,5 +5,6 @@
 
 #include "AP_RangeFinder_SharpGP2Y.h"
 #include "AP_RangeFinder_MaxsonarXL.h"
+#include "AP_RangeFinder_MaxsonarUART.h"
 #include "AP_RangeFinder_MaxsonarI2CXL.h"
 #include "AP_RangeFinder_analog.h"
