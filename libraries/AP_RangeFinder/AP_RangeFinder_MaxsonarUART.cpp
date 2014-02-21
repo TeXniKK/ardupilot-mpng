@@ -49,41 +49,37 @@ bool AP_RangeFinder_MaxsonarUART::take_reading()
 // read - return last value measured by sensor
 int AP_RangeFinder_MaxsonarUART::read()
 {
-    char buff[4];
-    int16_t ret_value = 0;
-    int count;
+    int16_t ret_value = 1;
     char rx;
-    int stage = 0;
-    int chars_read = 0;
     int result = 0;
     int got_data = 0;
+    char buf [10];
 
     healthy = false;
-	count = _uart->available();
-
-	while (count-- && !got_data) {
-		rx = _uart->read();
-		switch (stage) {
+	while ((rx = _uart->read())>=0 && !got_data) {
+		switch (_stage) {
 			case 0:
-				if (rx == 'R')
-					stage = 1;
+				_chars_read = 0;
+				if (rx == 'R') {
+					_stage = 1;
+				}
 				break;
 			case 1:
 				if ((rx<='9')&&(rx>='0')) {
-					buff[chars_read++] = rx;
-					if (chars_read >= 3) {
-						buff[3] = 0;
-						result = atoi(buff);
-						stage = 2;
-						chars_read = 0;
+					_buff[_chars_read++] = rx;
+					if (_chars_read >= 3) {
+						_buff[3] = 0;
+						result = atoi(_buff);
+						_stage = 2;
 					}
 				} else {
-					stage = 0;
+					_stage = 0;
 				}
 				break;
 			case 2:
-				if (rx == 0x13)
+				if (rx == 13)
 					got_data = 1;
+				_stage = 0;
 				break;
 			default:
 				break;
@@ -95,7 +91,7 @@ int AP_RangeFinder_MaxsonarUART::read()
 	}
     
     // ensure distance is within min and max
-    ret_value = constrain_float(ret_value, min_distance, max_distance);
+    ret_value = constrain_float(ret_value, 0, max_distance);
     
     ret_value = _mode_filter->apply(ret_value);
     

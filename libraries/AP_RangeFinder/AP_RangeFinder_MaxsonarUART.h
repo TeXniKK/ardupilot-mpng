@@ -19,7 +19,7 @@ public:
     AP_RangeFinder_MaxsonarUART(FilterInt16 *filter);
 
     // init - simply sets port
-    void init(AP_HAL::UARTDriver* uart) { _uart = uart; }
+    void init(AP_HAL::UARTDriver* uart) { _uart = uart; _stage = 0; _chars_read = 0;}
 
     // take_reading - ask sensor to make a range reading
     bool            take_reading();
@@ -32,6 +32,9 @@ public:
 
 protected:
     AP_HAL::UARTDriver* _uart;
+    char _buff[4];
+    int _stage;
+    int _chars_read;
 
 };
 #endif  // __AP_RANGEFINDER_MAXSONARI2CXL_H__

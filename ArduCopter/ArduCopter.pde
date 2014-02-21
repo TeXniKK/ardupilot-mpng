@@ -892,7 +892,7 @@ void setup() {
     sonar_analog_source = hal.analogin->channel(
             CONFIG_SONAR_SOURCE_ANALOG_PIN);
  #elif CONFIG_SONAR_SOURCE == SONAR_SOURCE_UART
-    hal.uartD->begin(9600);
+    hal.uartD->begin(9600, 20, 20);
  #else
   #warning "Invalid CONFIG_SONAR_SOURCE"
  #endif
